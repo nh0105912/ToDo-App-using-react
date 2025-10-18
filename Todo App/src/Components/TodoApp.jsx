@@ -7,7 +7,7 @@ const TodoApp = () => {
   function handleChange(e) {
     settask(e.target.value);
   }
- 
+
   function handleKey(e) {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -17,13 +17,19 @@ const TodoApp = () => {
   function addTask() {
     if (task.trim() === "") return;
 
-    settasks([...tasks, task]);
+    settasks([task,...tasks]);
     settask("");
   }
 
+  function deltTask(index){
+    const updateTask=tasks.filter((_,i)=> i!==index);
+    settasks(updateTask)
+
+  }
+  
   return (
     <>
-      <form  onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <input
           type="text"
           value={task}
@@ -37,11 +43,23 @@ const TodoApp = () => {
       </form>
 
       <ul>
-        {tasks.map((item,index)=>(
-            
-            <li id={index}>{item}</li>
+        {tasks.map((item, index) => (
+          <li
+            id={index}
+            style={{
+        
+              width: "400px",
+            }}
+          >
+            {item}
+            <button style={{
+                marginLeft:"90%"
+            }} type="button" onClick={()=>deltTask(index)}>X</button>
+          </li>
         ))}
       </ul>
+
+
     </>
   );
 };
